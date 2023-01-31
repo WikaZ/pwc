@@ -11,7 +11,8 @@
   <meta property="og:type" content="">
   <meta property="og:url" content="">
   <meta property="og:image" content="">
-
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+  <script type="text/javascript" src="js/main.js"></script>
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -27,94 +28,124 @@
   <!-- Add your site or application content here -->
   <div role="newsletter" class="email-container">
         <main class="content">
-<!--            <aside></aside>-->
+            <section></section>
             <article>
-              <form action="./" method="post" name="contact_form" id="contact-form">
-                <ul class="form-wrapper">
-                  <li class="form-row first-name-row">
-                    <label for="first-name">
-                      First name:
-                    </label>
-                    <input type="text"
-                           onkeyup="return handleValidate(this.name, validateName, this.value)"
-                    name="first-name"
-                    id="first-name">
-<!--                    <i class="fas fa-exclamation-circle failure-icon"></i>-->
-<!--                    <i class="far fa-check-circle success-icon"></i>-->
-                    <div class="error"></div>
-                  </li>
+              <div id="wrapper">
+                <form name="contact_form" id="contact-form">
+                  <ul class="form-wrapper">
+                    <li class="form-row first-name-row">
+                      <div class="form-control">
+                        <label for="first-name">
+                          First name:
+                          <sup>*</sup>
+                        </label>
+                        <div class="input-icons">
+                          <i class="fas fa-exclamation-circle error-icon icon"></i>
+                          <i class="far fa-check-circle success-icon icon"></i>
+                          <input type="text"
+                          name="first-name"
+                          id="first-name">
+                        </div>
+                      </div>
+                      <div class="error"></div>
+                    </li>
 
-                  <li class="form-row last-name-row">
-                    <label for="last-name">
-                      Last name:
-                    </label>
-                      <input type="text"
-                             onkeyup="return handleValidate(this.name, validateName, this.value)"
-                             name="last-name"
-                             id="last-name">
-<!--                    <i class="fas fa-exclamation-circle failure-icon"></i>-->
-<!--                    <i class="far fa-check-circle success-icon"></i>-->
-                    <div class="error"></div>
-                  </li>
+                    <li class="form-row last-name-row">
+                      <div class="form-control">
+                        <label for="last-name">
+                          Last name:
+                          <sup>*</sup>
+                        </label>
+                        <div class="input-icons">
+                          <i class="fas fa-exclamation-circle error-icon icon"></i>
+                          <i class="far fa-check-circle success-icon icon"></i>
+                          <input type="text"
+                                 name="last-name"
+                                 id="last-name">
+                        </div>
+                      </div>
+                      <div class="error"></div>
+                    </li>
 
-                  <li class="form-row email-row">
-                    <label for="email">
-                      Email:
-                    </label>
-                    <input type="email"
-                           onkeyup="return handleValidate(this.name, validateEmail, this.value)"
-                           name="email"
-                           id="email">
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
-                    <i class="far fa-check-circle success-icon"></i>
-                    <div class="error"></div>
-                  </li>
+                    <li class="form-row email-row">
+                      <div class="form-control">
+                        <label for="email">
+                          Email:
+                          <sup>*</sup>
+                        </label>
+                        <div class="input-icons">
+                          <i class="fas fa-exclamation-circle error-icon  icon"></i>
+                          <i class="far fa-check-circle success-icon  icon"></i>
+                          <input type="email"
+                                 name="email"
+                                 id="email">
+                        </div>
+                      </div>
+                      <div class="error"></div>
+                    </li>
 
-                  <li class="form-row phone-number-row">
-                    <label for="phone-number">
-                      Phone number:
-                    </label>
-                    <input type="tel"
-                           onkeyup="return handleValidate(this.name, validatePhoneNumber, this.value)"
-                           name="phone-number"
-                           id="phone-number"
-                           pattern="+48[0-9]">
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
-                    <i class="far fa-check-circle success-icon"></i>
-                    <div class="error"></div>
-                  </li>
+                    <li class="form-row phone-number-row">
+                      <div class="form-control">
+                        <label for="phone-number">
+                          Phone number:
+                          <sup>*</sup>
+                        </label>
+                        <div class="input-icons">
+                          <i class="fas fa-exclamation-circle error-icon icon"></i>
+                          <i class="far fa-check-circle success-icon icon"></i>
+                          <input type="tel"
+                                 name="phone-number"
+                                 id="phone-number"
+                                 placeholder="+## ###-###-###">
 
-                  <li class="form-row destination-row">
-                    <label for="destination">
-                      Destination:
-                    </label>
-                    <select name="destination" id="destination" onchange="return handleValidate(this.name, validateSelect, this.value)">
-                      <option value=" ">--Select a destination--</option>
-                      <option value="Europe">Europe</option>
-                      <option value="Africa">Africa</option>
-                      <option value="Northern Africa">Northern Africa</option>
-                      <option value="Southern Africa">Southern Africa</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Oceania">Oceania</option>
-                      <option value="Asia">Asia</option>
-                    </select>
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
-                    <i class="far fa-check-circle success-icon"></i>
-                    <div class="error"></div>
-                  </li>
-                  <li class="form-row">
-                    <button type="submit" class="submit-btn"> Submit</button>
-                  </li>
-                </ul>
-              </form>
+                        </div>
+                      </div>
+                      <div class="error"></div>
+                    </li>
+
+                    <li class="form-row destination-row">
+                      <div class="form-control">
+                        <label for="destination">
+                          Destination:
+                          <sup>*</sup>
+                        </label>
+                        <div class="input-icons">
+                          <i class="fas fa-exclamation-circle error-icon icon"></i>
+                          <i class="far fa-check-circle success-icon icon"></i>
+                          <select name="destination" id="destination" onchange="return handleValidate(this.name, validateSelect, this.value)">
+                            <option value=" ">--Select a destination--</option>
+                            <option value="Europe">Europe</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Northern Africa">Northern Africa</option>
+                            <option value="Southern Africa">Southern Africa</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Oceania">Oceania</option>
+                            <option value="Asia">Asia</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="error"></div>
+                    </li>
+                    <li class="form-row">
+                      <button type="submit" class="submit-btn" id="submit-btn"> Submit</button>
+                    </li>
+                  </ul>
+                </form>
+              </div>
             </article>
         </main>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3>Thank you for submitting your interest
+          in our offer!</h3>
+      </div>
+    </div>
   </div>
 
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
@@ -122,73 +153,7 @@
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
-  <script>
-
-    function validateName(value){
-      return value === '' ? 'This field can not be empty' : null
-    }
-
-    function validateEmail(value){
-      const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-      return pattern.test(value) ? null : "Invalid email"
-    }
-
-    function validateSelect(value){
-      return value === " " ? "This field can not be empty" : null
-    }
-
-    function validatePhoneNumber(value){
-      const pattern = /(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}/
-      return pattern.test(value) ? null : "Invalid phone number"
-    }
-
-
-    function styleField(validFunction, value, fieldName){
-      const result= validFunction(value);
-      const parentClassName= fieldName +'-row';
-      const parentEl = document.getElementsByClassName(parentClassName)[0];
-      const inputEl = document.getElementById(fieldName);
-      const errorMessage = parentEl.getElementsByClassName('error')[0];
-
-      if(result) {
-        errorMessage.innerHTML = result
-        inputEl.style.border = "2px solid red"
-      }else{
-        errorMessage.innerHTML = "";
-        inputEl.style.border = "2px solid green"
-      }
-    }
-
-    function handleValidate(fieldName, validFunction, value){
-      console.log(value, "val")
-      console.log(validFunction(value))
-      const parentClassName= fieldName +'-row';
-      console.log(parentClassName, "parentClassName")
-
-      switch(fieldName) {
-        case 'first-name':
-        case 'last-name':
-
-          styleField(validFunction, value, fieldName);
-          break;
-
-        case 'email':
-          styleField(validFunction, value, fieldName);
-          break;
-
-        case 'phone-number':
-          styleField(validFunction, value, fieldName);
-          break;
-
-        case 'destination':
-          styleField(validFunction, value, fieldName);
-          break;
-
-            default:
-
-      }
-    }
-  </script>
+  <script src="js/main.js" type="module"></script>
 </body>
 
 </html>

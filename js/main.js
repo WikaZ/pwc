@@ -1,84 +1,140 @@
-export const getInput =(id)=> document.getElementById(id);
-const getClass = (className)=>{
-    document.getElementsByClassName(className)
-}
+$(document).ready(function () {
+    fieldSet
+        .forEach(
+            c => {
+                const inputEl = document.getElementById(c.name);
 
-// get icons
+                if(c.type === types.SELECT){
+                    inputEl.onchange = () =>
+                        handleValidate(c.name, c.validFunction, document.getElementById(c.name).value);
+                }
 
-const firstName = getInput("first-name");
-const lastName = getInput("last-name");
-const email = getInput("email");
-const phoneNumber = getInput("phone-number");
-const destination = getInput("destination");
+                inputEl.onkeyup = () =>
+                    handleValidate(c.name, c.validFunction, document.getElementById(c.name).value);
+            });
 
+    document.getElementById("contact-form").onsubmit = handleSubmit;
 
-const fields = [firstName, lastName, email, phoneNumber, destination];
-const form = getInput("contact-form")
-// const errorMessage = getClass("error");
-
-const successIcon = getClass("success-icon");
-const errorIcon = getClass("error-icon");
-const errorMessage = document.getElementsByClassName('error');
-
-console.log(lastName, "lastName");
-console.log(errorMessage, "err message 0");
-
-
-
-let engine = (id, serial, message) => {
-
-    if (id.value.trim() === "") {
-
-        errorMessage[serial].innerHTML = message;
-        id.style.border = "2px solid red";
-        console.log('empty')
-        // icons
-        // errorIcon.style.opacity = "1";
-        // successIcon.style.opacity = "0";
-    }
-
-    else {
-        errorMessage[serial].innerHTML = "";
-        id.style.border = "2px solid green";
-
-        // icons
-        console.log(errorIcon, "err icon")
-        // errorIcon.style.opacity = "0";
-        // successIcon.style.opacity = "1";
-    }
-}
-
- function handleValidate2(name, value, form){
-    console.log(name);
-    console.log(form, "form");
-    switch(name){
-        case 'first-name':
-        case 'last-name':
-            const errorMessage = document.getElementsByClassName('error');
-            const fieldName = document.getElementById(name);
-            console.log(name)
-            if (value.trim() === "") {
-                fieldName.nextElementSibling.innerHTML="message"
-
-                fieldName.style.border = "2px solid red";
-
-                // icons
-                // errorIcon.style.opacity = "1";
-                // successIcon.style.opacity = "0";
-            }else{
-                errorMessage[0].innerHTML="";
-                fieldName.style.border = "2px solid green";
-            }
-            break;
-        case'email':
-    }
-}
-
-form.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    engine(firstName, 0, "first name can not be blank");
-    engine(lastName, 1, "last name can not be blank");
-    engine(phoneNumber, 2, "phone number can not be blank");
-    engine(email, 3, "email can not be blank");
-    engine(destination, 4, "destination can not be blank");
 });
+
+const form = document.getElementById("contact-form")
+const modal = document.getElementById("modal");
+const btn = document.getElementById("myBtn");
+
+const types= {
+    INPUT: 'input',
+    SELECT:'select'
+}
+
+const fieldSet = [
+    {
+        name:"first-name",
+        id:0,
+        errorMessage:"first name can not be blank",
+        type: types.INPUT,
+        validFunction: validateName
+    },
+    {
+        name: "last-name",
+        id:1,
+        errorMessage:"last name can not be blank",
+        type: types.INPUT,
+        validFunction: validateName
+    },
+    {
+        name: "email",
+        id: 2,
+        errorMessage:"email can not be blank",
+        type: types.INPUT,
+        validFunction: validateEmail
+    },
+    {
+        name: "phone-number",
+        id:3,
+        errorMessage:"phone number can not be blank",
+        type: types.INPUT,
+        validFunction: validatePhoneNumber
+    },
+    {
+        name: "destination",
+        id: 4,
+        errorMessage:"destination can not be blank",
+        type: types.SELECT,
+        validFunction: validateName
+    }
+]
+
+
+
+function validateName(value){
+    return value.trim() === "" ? "This field can not be empty" : null
+}
+
+function validateEmail(value){
+    const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    return pattern.test(value) ? null : "Invalid email"
+}
+
+function validateSelect(value){
+    return value === " " ? "This field can not be empty" : null
+}
+
+function validatePhoneNumber(value){
+    const trimmedValue = value.replace(/\s/g, "");
+    const pattern = /\+48[1-9][0-9]{8}$/
+    return trimmedValue === "" ? "This field can not be empty" : pattern.test(trimmedValue) ? null : "Invalid phone number"
+}
+
+
+function handleValidate(fieldName, validFunction, value){
+    const result = validFunction(value);
+    const parentClassName = fieldName + '-row';
+    const parentEl = document.getElementsByClassName(parentClassName)[0];
+    const inputEl = document.getElementById(fieldName);
+    const errorMessage = parentEl.getElementsByClassName('error')[0];
+    const successIcon = parentEl.getElementsByClassName("success-icon")[0];
+    const errorIcon = parentEl.getElementsByClassName("error-icon")[0];
+
+    if (result) {
+        errorMessage.innerHTML = result
+        inputEl.style.border = "2px solid red";
+        errorIcon.style.opacity = "1";
+        successIcon.style.opacity = "0";
+    } else {
+        errorMessage.innerHTML = '&nbsp';
+        inputEl.style.border = "2px solid green";
+        errorIcon.style.opacity = "0";
+        successIcon.style.opacity = "1";
+    }
+
+    return result;
+}
+
+
+function handleSubmit(event) {
+        event.preventDefault();
+
+        const resultSet = fieldSet
+            .map(
+                c => {
+                    return handleValidate(c.name, c.validFunction, document.getElementById(c.name).value)
+                });
+
+        const result = resultSet.every(e => !e);
+
+        if (result) {
+            const submitBtn = document.getElementById("submit-btn");
+            modal.style.display = "block";
+            submitBtn.disabled = true
+            submitBtn.classList.add("disabled");
+            setTimeout(function () {
+                modal.style.opacity = '0';
+                modal.style.transitionProperty = 'opacity';
+                modal.style.transitionDuration = '2s';
+            }, 3000);
+
+        }
+
+    return false;
+}
+
